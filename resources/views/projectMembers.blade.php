@@ -28,7 +28,7 @@
                        @endforeach
                    </table>
 
-                    {{ $tasks->links() }}
+                    {{ $members->links() }}
                 </div>
             </div>
         </div>

@@ -60,9 +60,8 @@ class ProjectController extends Controller
         $project = Auth::user()->projects()->create([
             'title' => $data['title'],
             'description' => $data['description'],
+            'owner_id' => Auth::id(),
         ]);
-
-        $project->users()->attach(Auth::id());
 
         // flash a success message to the session
         session()->flash('status', 'Project Created!');

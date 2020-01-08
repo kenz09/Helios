@@ -8,7 +8,7 @@ class Project extends Model
 {
     //
     protected $fillable = [
-        'name','description',
+        'title','description','owner_id'
     ];
 
     /**

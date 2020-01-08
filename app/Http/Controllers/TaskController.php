@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Project;
 use App\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,10 +16,10 @@ class TaskController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(Project $project)
     {
         // paginate the authorized user's tasks with 5 per page
-        $tasks = Auth::user()
+        $tasks = $project
             ->tasks()
             ->orderBy('is_complete')
             ->orderByDesc('created_at')
