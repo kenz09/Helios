@@ -41,11 +41,13 @@ class ProjectController extends Controller
             'description' => 'required|string|max:255',
         ]);
 
-        // create a new incomplete task with the given title
-        Auth::user()->projects()->attach(Project::create([
+        // create a new project with the given title
+        $project = Auth::user()->projects()->create([
             'title' => $data['title'],
             'description' => $data['description'],
-        ]););
+        ]);
+
+        $project->users()->attach(Auth::id());
 
         // flash a success message to the session
         session()->flash('status', 'Project Created!');
