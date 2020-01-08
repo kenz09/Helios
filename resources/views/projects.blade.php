@@ -48,8 +48,6 @@
                                </td>
                                <td class="text-right">
                                     <form method="GET" action="{{ 'project/{{$project->id}}/members' }}">
-                                        @csrf
-                                        @method('PATCH')
                                         <button type="submit" class="btn btn-primary">Show Members</button>
                                     </form>
                                </td>
