@@ -65,4 +65,13 @@ class User extends Authenticatable
     public function projects(){
         return $this->belongsToMany(Project::class);
     }
+
+    /**
+     * user's messages
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function messages(){
+        return $this->hasMany(Message::class);
+    }
 }
