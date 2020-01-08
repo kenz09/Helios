@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Project;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
@@ -25,6 +26,18 @@ class ProjectController extends Controller
         // return task index view with paginated tasks
         return view('projects', [
             'projects' => $projects
+        ]);
+    }
+
+    /**
+     * Paginate the authenticated user's tasks.
+     *
+     * @param \App\Project $project
+     * @return \Illuminate\View\View
+     */
+    public function show(Project $project){
+        return view('projectMembers',[
+            'members' => $this->getMembers($project),
         ]);
     }
 
@@ -84,5 +97,15 @@ class ProjectController extends Controller
         $project->users()->detach($user);
 
         return redirect('/projects');
+    }
+
+    /**
+     * gets all project member
+     *
+     * @param \App\Project $project
+     * @return \Illuminate\Database\Eloquent
+     */
+    public function getMembers(Project $project){
+        return $project->users()->get();
     }
 }
