@@ -35,4 +35,10 @@ Route::middleware(['auth'])->group(function() {
     Route::get('project/{project}/members', 'ProjectController@show');
     Route::patch('project/{project}/add/{user}', 'ProjectController@addMember');
     Route::patch('project/{project}/remove/{user}', 'ProjectController@removeMember');
+
+
 });
+
+Route::get('chat', 'ChatController@index');
+Route::get('messages', 'ChatController@fetchMessages');
+Route::post('messages', 'ChatController@sendMessage');
