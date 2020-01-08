@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Project;
+use App\User;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -53,6 +54,35 @@ class ProjectController extends Controller
         session()->flash('status', 'Project Created!');
 
         // redirect to projects index
+        return redirect('/projects');
+    }
+
+
+    /**
+     * adds a member to project
+     *
+     * @param \App\Project $project
+     * @param \App\User $user
+     * @return \Illuminate\Http\RedirectResponse
+     *
+     */
+    public function addMember(Project $project,User $user){
+        $project->users()->attach($user);
+
+        return redirect('/projects');
+    }
+
+    /**
+     * remove a member from project
+     *
+     * @param \App\Project $project
+     * @param \App\User $user
+     * @return \Illuminate\Http\RedirectResponse
+     *
+     */
+    public function removeMember(Project $project, User $user){
+        $project->users()->detach($user);
+
         return redirect('/projects');
     }
 }

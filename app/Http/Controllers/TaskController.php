@@ -62,7 +62,7 @@ class TaskController extends Controller
     /**
      * Mark the given task as complete and redirect to tasks index.
      *
-     * @param \App\Models\Task $task
+     * @param \App\Task $task
      * @return \Illuminate\Routing\Redirector
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
