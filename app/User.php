@@ -56,4 +56,15 @@ class User extends Authenticatable
     public function tasks(){
         return $this->hasMany(Task::class);
     }
+
+    /**
+     * The relationship to many projects
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function projects(){
+        return $this->belongsToMany(Project::class);
+    }
+
+
 }
