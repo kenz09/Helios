@@ -11,10 +11,10 @@
             @endif
 
             <div class="card card-new-task">
-                <div class="card-header">New Task</div>
+                <div class="card-header">New Project</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('tasks.store') }}">
+                    <form method="POST" action="{{ route('projects.store') }}">
                         @csrf
                         <div class="form-group">
                             <label for="title">Title</label>
@@ -37,27 +37,21 @@
                 </div>
             </div>
             <div class="card">
-                <div class="card-header">Tasks</div>
+                <div class="card-header">projects</div>
 
                 <div class="card-body">
                    <table class="table table-striped">
-                       @foreach ($tasks as $task)
+                       @foreach ($projects as $project)
                            <tr>
                                <td>
-                                   @if ($task->is_complete)
-                                       <s>{{ $task->title }}</s>
-                                   @else
-                                       {{ $task->title }}
-                                   @endif
+                                  {{ $project->title }}
                                </td>
                                <td class="text-right">
-                                   @if (! $task->is_complete)
-                                       <form method="POST" action="{{ route('tasks.update', $task->id) }}">
-                                           @csrf
-                                           @method('PATCH')
-                                           <button type="submit" class="btn btn-primary">Complete</button>
-                                       </form>
-                                   @endif
+                                    <form method="GET" action="{{ 'project/{{$project->id}}/members' }}">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit" class="btn btn-primary">Show Members</button>
+                                    </form>
                                </td>
                            </tr>
                        @endforeach

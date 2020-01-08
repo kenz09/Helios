@@ -36,8 +36,9 @@ class ProjectController extends Controller
      * @return \Illuminate\View\View
      */
     public function show(Project $project){
+        $members = $project->users()->paginate(10);
         return view('projectMembers',[
-            'members' => $this->getMembers($project),
+            'members' => $members,
         ]);
     }
 
@@ -97,15 +98,5 @@ class ProjectController extends Controller
         $project->users()->detach($user);
 
         return redirect('/projects');
-    }
-
-    /**
-     * gets all project member
-     *
-     * @param \App\Project $project
-     * @return \Illuminate\Database\Eloquent
-     */
-    public function getMembers(Project $project){
-        return $project->users()->get();
     }
 }
