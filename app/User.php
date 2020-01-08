@@ -36,4 +36,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Set and encrypt the password attribute.
+     *
+     * @param $value
+     */
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
+
+
+    /**
+     * The relationship to the owning user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function tasks(){
+        return $this->hasMany(Task::class);
+    }
 }
