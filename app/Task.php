@@ -38,4 +38,13 @@ class Task extends Model
     public function user(){
     	return $this->belongsTo(User::class);
     }
+
+    /**
+     * The relationship to the owning project.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function project(){
+    	return $this->belongsTo(Project::class);
+    }
 }
