@@ -27,7 +27,8 @@ class TaskController extends Controller
 
         // return task index view with paginated tasks
         return view('tasks', [
-            'tasks' => $tasks
+            'tasks' => $tasks,
+            'project'=> $project
         ]);
     }
 
@@ -37,27 +38,31 @@ class TaskController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request, Project $project)
     {
         // validate the given request
         $data = $this->validate($request, [
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
+            'user' => 'required'
         ]);
 
+        dd($data);
         // create a new incomplete task with the given title
         Auth::user()->tasks()->create([
             'title' => $data['title'],
             'description' => $data['description'],
             'is_complete' => false,
             'is_approved' => false,
+            'project_id' => $project->id,
+            'user_id' => $data['user'],
         ]);
 
         // flash a success message to the session
         session()->flash('status', 'Task Created!');
 
         // redirect to tasks index
-        return redirect('/tasks');
+        return redirect('/project/'.$project->id.'/tasks');
     }
 
     /**
@@ -67,7 +72,7 @@ class TaskController extends Controller
      * @return \Illuminate\Routing\Redirector
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(Task $task)
+    public function update(Project $project, Task $task)
     {
         // check if the authenticated user can complete the task
         $this->authorize('complete', $task);
@@ -80,7 +85,7 @@ class TaskController extends Controller
         session()->flash('status', 'Task Completed!');
 
         // redirect to tasks index
-        return redirect('/tasks');
+        return redirect('/project/'.$project->id.'/tasks/');
     }
 
 }
