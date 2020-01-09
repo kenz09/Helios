@@ -70,6 +70,7 @@ class ProjectController extends Controller
         return redirect('/projects');
     }
 
+
     /**
      * adds a member to project
      *
