@@ -27,6 +27,8 @@ class Task extends Model
         'description',
         'is_complete',
         'is_approved',
+        'project_id',
+        'user_id',
     ];
 
 
