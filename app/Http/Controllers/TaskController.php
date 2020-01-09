@@ -47,7 +47,6 @@ class TaskController extends Controller
             'user' => 'required'
         ]);
 
-        dd($data);
         // create a new incomplete task with the given title
         Auth::user()->tasks()->create([
             'title' => $data['title'],

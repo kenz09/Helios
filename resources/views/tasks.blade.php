@@ -11,10 +11,10 @@
             @endif
 
             <div class="card card-new-task">
-                <div class="card-header">New Task</div>
+                <div class="card-header">{{$project->title}} >> New Task</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('tasks.store') }}">
+                    <form method="POST" action="{{ 'tasks/store' }}">
                         @csrf
                         <div class="form-group">
                             <label for="title">Title</label>
@@ -27,6 +27,13 @@
                             <label for="title">Description</label>
                             <input id="description" name="description" type="text" maxlength="255" class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}" autocomplete="off" />
                             @if ($errors->has('description'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('description') }}</strong>
+                                </span>
+                            @endif
+                            <label for="user">User</label>
+                            <input id="user" name="user" type="text" maxlength="255" class="form-control{{ $errors->has('user') ? ' is-invalid' : '' }}" autocomplete="off" value='{{Auth::id()}}'/>
+                            @if ($errors->has('user'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('description') }}</strong>
                                 </span>
@@ -52,7 +59,7 @@
                                </td>
                                <td class="text-right">
                                    @if (! $task->is_complete)
-                                       <form method="POST" action="{{ route('tasks.update', $task->id) }}">
+                                       <form method="POST" action="{{ '/project/'.$project->id.'/tasks/update/'.$task->id.'/' }}">
                                            @csrf
                                            @method('PATCH')
                                            <button type="submit" class="btn btn-primary">Complete</button>
