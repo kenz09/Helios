@@ -30,7 +30,7 @@ Route::middleware(['auth'])->group(function() {
 
     Route::get('project/{project}/tasks', 'TaskController@index');
     Route::post('project/{project}/tasks/store', 'TaskController@store');
-    Route::patch('project/{project}/tasks/update', 'TaskController@update');
+    Route::patch('project/{project}/tasks/update/{task}', 'TaskController@update');
 
     Route::get('project/{project}/members', 'ProjectController@show');
     Route::patch('project/{project}/add/{user}', 'ProjectController@addMember');
