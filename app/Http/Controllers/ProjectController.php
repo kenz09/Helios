@@ -30,7 +30,20 @@ class ProjectController extends Controller
     }
 
     /**
-     * Paginate the authenticated user's tasks.
+     * show the project
+     *
+     * @param int $projectId
+     * @return \Illuminate\View\View
+     */
+    public function show($projectId){
+        $project = Project::findOrFail($projectId);
+        $project->tasks()->get();
+        $project->users()->get();
+        return view('project',['project'=>$project]);
+    }
+
+    /**
+     * Paginate the project members.
      *
      * @param \App\Project $project
      * @return \Illuminate\View\View
