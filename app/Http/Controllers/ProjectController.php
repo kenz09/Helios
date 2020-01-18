@@ -35,7 +35,7 @@ class ProjectController extends Controller
      * @param \App\Project $project
      * @return \Illuminate\View\View
      */
-    public function show(Project $project){
+    public function showById(Project $project){
         $members = $project->users()->paginate(10);
         return view('projectMembers',[
             'members' => $members,
