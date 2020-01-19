@@ -27,13 +27,14 @@ class ChatController extends Controller
     /**
      * Fetch all messages
      *
+     * @param int $projectId
      * @return Message
      */
-    public function fetchMessages()
+    public function fetchMessages($projectId)
     {
-        $messages =  Message::with('user')->where( function ($query){
-            $query->where('');
-        })->get();
+        $messages =  Message::with('user')->where('project',$projectId);
+
+        return $messages;
     }
 
     /**
