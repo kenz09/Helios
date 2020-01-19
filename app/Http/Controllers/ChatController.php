@@ -31,7 +31,9 @@ class ChatController extends Controller
      */
     public function fetchMessages()
     {
-        return Message::with('user')->get();
+        $messages =  Message::with('user')->where( function ($query){
+            $query->where('');
+        })->get();
     }
 
     /**

@@ -4,43 +4,28 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            @if (session('status'))
-                <div class="alert alert-success" role="alert">
-                    {{ session('status') }}
-                </div>
-            @endif
-
-            <div class="card card-new-task">
-                <div class="card-header">Project Name</div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('projects.store') }}">
-                        @csrf
-                        <div class="form-group">
-                            <label for="title">Title</label>
-                            <input id="title" name="title" type="text" maxlength="255" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" autocomplete="off" />
-                            @if ($errors->has('title'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('title') }}</strong>
-                                </span>
-                            @endif
-                            <label for="title">Description</label>
-                            <input id="description" name="description" type="text" maxlength="255" class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}" autocomplete="off" />
-                            @if ($errors->has('description'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('description') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                        <button type="submit" class="btn btn-primary">Create</button>
-                    </form>
-                </div>
-            </div>
             <div class="card">
                 <div class="card-header">{{$project->name}}</div>
 
                 <div class="card-body">
                    {{$project->description}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">Chats</div>
+
+                <div class="panel-body">
+                    <chat-messages :messages="messages"></chat-messages>
+                </div>
+                <div class="panel-footer">
+                    <chat-form
+                        v-on:messagesent="addMessage"
+                        :user="{{ Auth::user() }}"
+                    ></chat-form>
                 </div>
             </div>
         </div>
