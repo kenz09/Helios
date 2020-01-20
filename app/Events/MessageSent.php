@@ -5,6 +5,7 @@ namespace App\Events;
 
 use App\User;
 use App\Message;
+use App\Project;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -32,14 +33,22 @@ class MessageSent implements ShouldBroadcast
     public $message;
 
     /**
+     *
+     * Project it is assigned to
+     *
+     * @var Project
+     */
+    public $project;
+    /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(User $user, Message $message)
+    public function __construct(User $user, Message $message, Project $project)
     {
         $this->user = $user;
         $this->message = $message;
+        $this->project = $project;
     }
 
     /**

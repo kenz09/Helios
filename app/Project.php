@@ -32,4 +32,8 @@ class Project extends Model
     public function owner(){
         return $this->belongsTo(User::class,'owner_id');
     }
+
+    public function messages(){
+        return $this->hasMany(Message::class);
+    }
 }

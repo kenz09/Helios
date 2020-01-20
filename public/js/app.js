@@ -1851,7 +1851,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['user'],
+  props: ['user', 'project'],
   data: function data() {
     return {
       newMessage: ''
@@ -1861,7 +1861,8 @@ __webpack_require__.r(__webpack_exports__);
     sendMessage: function sendMessage() {
       this.$emit('messagesent', {
         user: this.user,
-        message: this.newMessage
+        message: this.newMessage,
+        project: this.project
       });
       this.newMessage = '';
     }
@@ -59545,7 +59546,8 @@ var app = new Vue({
     Echo["private"]('chat').listen('MessageSent', function (e) {
       _this.messages.push({
         message: e.message.message,
-        user: e.user
+        user: e.user,
+        project: e.project
       });
     });
   },
@@ -59553,7 +59555,8 @@ var app = new Vue({
     fetchMessages: function fetchMessages() {
       var _this2 = this;
 
-      axios.get('/messages').then(function (response) {
+      var pathArray = window.location.pathname.split('/');
+      axios.get('/messages/' + pathArray[2]).then(function (response) {
         _this2.messages = response.data;
       });
     },

@@ -34,7 +34,7 @@ const app = new Vue({
     el: '#app',
 
     data: {
-        messages: []
+        messages: [],
     },
 
     created() {
@@ -43,14 +43,18 @@ const app = new Vue({
         .listen('MessageSent', (e) => {
             this.messages.push({
             message: e.message.message,
-            user: e.user
+            user: e.user,
+            project: e.project
             });
         });
     },
 
     methods: {
+
         fetchMessages() {
-            axios.get('/messages').then(response => {
+            var pathArray= window.location.pathname.split('/');
+
+            axios.get('/messages/'+pathArray[2]).then(response => {
                 this.messages = response.data;
             });
         },

@@ -47,12 +47,10 @@
                                   {{ $project->title }}
                                </td>
                                <td class="text-right">
-                                    <form method="GET" action="{{ '/project/'.$project->id.'/tasks' }}">
-                                        <button type="submit" class="btn btn-primary">Show Tasks</button>
+                                    <form method="GET" action="{{ '/project/'.$project->id }}">
+                                        <button type="submit" class="btn btn-primary">View</button>
                                     </form>
-                                    <form method="GET" action="{{ '/project/'.$project->id.'/members' }}">
-                                        <button type="submit" class="btn btn-primary">Show Members</button>
-                                    </form>
+
                                </td>
                            </tr>
                        @endforeach

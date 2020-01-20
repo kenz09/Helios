@@ -28,6 +28,8 @@ Route::middleware(['auth'])->group(function() {
         ]
     ]);
 
+    Route::get('project/{project}','ProjectController@show');
+
     Route::get('project/{project}/tasks', 'TaskController@index');
     Route::post('project/{project}/tasks/store', 'TaskController@store');
     Route::patch('project/{project}/tasks/update/{task}', 'TaskController@update');
@@ -39,6 +41,5 @@ Route::middleware(['auth'])->group(function() {
 
 });
 
-Route::get('chat', 'ChatController@index');
-Route::get('messages', 'ChatController@fetchMessages');
+Route::get('messages/{project}', 'ChatController@fetchMessages');
 Route::post('messages', 'ChatController@sendMessage');

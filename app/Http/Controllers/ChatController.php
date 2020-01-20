@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\MessageSent;
 use App\Message;
+use App\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,9 +31,9 @@ class ChatController extends Controller
      * @param int $projectId
      * @return Message
      */
-    public function fetchMessages($projectId)
+    public function fetchMessages($project)
     {
-        $messages =  Message::with('user')->where('project',$projectId);
+        $messages =  Message::with('user')->where('project',$project);
 
         return $messages;
     }
@@ -46,12 +47,15 @@ class ChatController extends Controller
     public function sendMessage(Request $request)
     {
         $user = Auth::user();
-
         $message = $user->messages()->create([
             'message' => $request->input('message')
         ]);
 
-        broadcast(new MessageSent($user, $message))->toOthers();
+        $project = Project::find($request->input('project'));
+        $project->messages()->save($message);
+
+
+        broadcast(new MessageSent($user, $message,$project))->toOthers();
 
         return ['status' => 'Message Sent!'];
     }

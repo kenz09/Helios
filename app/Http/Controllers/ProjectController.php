@@ -38,8 +38,10 @@ class ProjectController extends Controller
     public function show($projectId){
         $project = Project::findOrFail($projectId);
         $project->tasks()->get();
-        $project->users()->get();
-        return view('project',['project'=>$project]);
+        return view('project',[
+            'project'=>$project,
+            'messages'=>$project->messages()->get()
+        ]);
     }
 
     /**
