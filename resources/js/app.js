@@ -53,8 +53,8 @@ const app = new Vue({
 
         fetchMessages() {
             var pathArray= window.location.pathname.split('/');
-
-            axios.get('/messages/'+pathArray[2]).then(response => {
+            console.log('/messages/'+pathArray[2]);
+            axios.get('/messages').then(response => {
                 this.messages = response.data;
             });
         },

@@ -33,7 +33,7 @@ class ChatController extends Controller
      */
     public function fetchMessages($project)
     {
-        $messages =  Message::with('user')->where('project',$project);
+        $messages =  Message::with('user');
 
         return $messages;
     }
@@ -51,11 +51,11 @@ class ChatController extends Controller
             'message' => $request->input('message')
         ]);
 
-        $project = Project::find($request->input('project'));
-        $project->messages()->save($message);
+        // $project = Project::find($request->input('project'));
+        // $project->messages()->save($message);
 
 
-        broadcast(new MessageSent($user, $message,$project))->toOthers();
+        broadcast(new MessageSent($user, $message))->toOthers();
 
         return ['status' => 'Message Sent!'];
     }

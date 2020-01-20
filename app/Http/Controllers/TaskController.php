@@ -33,6 +33,19 @@ class TaskController extends Controller
     }
 
     /**
+     *
+     * Returns form to create new task
+     *
+     * @return \Illuminate\View\View
+     */
+
+    public function create(Project $project){
+        return view('newTaskForm',[
+                'project'=>$project
+            ]);
+    }
+
+    /**
      * Store a new incomplete task for the authenticated user.
      *
      * @param \Illuminate\Http\Request $request
@@ -60,8 +73,8 @@ class TaskController extends Controller
         // flash a success message to the session
         session()->flash('status', 'Task Created!');
 
-        // redirect to tasks index
-        return redirect('/project/'.$project->id.'/tasks');
+        // redirect to project index
+        return redirect('/project/'.$project->id);
     }
 
     /**
@@ -84,7 +97,7 @@ class TaskController extends Controller
         session()->flash('status', 'Task Completed!');
 
         // redirect to tasks index
-        return redirect('/project/'.$project->id.'/tasks/');
+        return redirect('/project/'.$project->id);
     }
 
 }

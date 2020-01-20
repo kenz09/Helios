@@ -43,7 +43,7 @@
                     </form>
                 </div>
             </div>
-            <div class="card">
+            {{-- <div class="card">
                 <div class="card-header">Tasks</div>
 
                 <div class="card-body">
@@ -71,7 +71,7 @@
                    </table>
 
                     {{ $tasks->links() }}
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>

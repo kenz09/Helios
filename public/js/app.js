@@ -59556,7 +59556,8 @@ var app = new Vue({
       var _this2 = this;
 
       var pathArray = window.location.pathname.split('/');
-      axios.get('/messages/' + pathArray[2]).then(function (response) {
+      console.log('/messages/' + pathArray[2]);
+      axios.get('/messages').then(function (response) {
         _this2.messages = response.data;
       });
     },
