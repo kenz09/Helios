@@ -84,7 +84,7 @@
                 <div class="card-body">
                    <table class="table table-striped">
                        @foreach ($project->tasks as $task)
-                            @if ($task->is_complete)
+                            @if ($task->is_complete && !$task->is_approved)
                             <tr>
                                 <td>
                                     <s>{{ $task->title }}</s>
@@ -105,9 +105,27 @@
                             @endif
                        @endforeach
                    </table>
-
                 </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">Tasks Finished</div>
 
+                    <div class="card-body">
+                       <table class="table table-striped">
+                           @foreach ($project->tasks as $task)
+                                @if ($task->is_approved)
+                                <tr>
+                                    <td>
+                                        <s>{{ $task->title }}</s>
+                                    </td>
+
+                                </tr>
+                                @endif
+                           @endforeach
+                       </table>
+                </div>
             </div>
         </div>
     </div>
