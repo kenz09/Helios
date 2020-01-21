@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Project;
 use App\Task;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -60,6 +61,10 @@ class TaskController extends Controller
             'user' => 'required'
         ]);
 
+        $user = $project->users->contains($data['user']);
+        if(!$user){
+            abort(404);
+        }
         // create a new incomplete task with the given title
         Auth::user()->tasks()->create([
             'title' => $data['title'],
@@ -110,7 +115,7 @@ class TaskController extends Controller
     public function approve(Project $project, Task $task)
     {
         // check if the authenticated user can complete the task
-        $this->authorize('approve', ['task'=>$task, 'project'=>$project]);
+        $this->authorize('approve', $task);
 
         // mark the task as complete and save it
         $task->is_approved = true;

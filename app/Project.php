@@ -29,6 +29,15 @@ class Project extends Model
         return $this->belongsToMany(User::class);
     }
 
+    /**
+     * The relationship to many admins
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function admins(){
+        return $this->belongsToMany(User::class, 'project_admin', 'project_id','user_id');
+    }
+
     public function owner(){
         return $this->belongsTo(User::class,'owner_id');
     }

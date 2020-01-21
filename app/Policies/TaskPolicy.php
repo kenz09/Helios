@@ -28,13 +28,14 @@ class TaskPolicy
 
     public function approve(User $user, Task $task){
         $project = Project::findOrFail($task->project_id);
-        $project->users()->get();
-        return $project->users->contains($user);
+        $project->admins()->get();
+
+        return $user->is($project->owner)||$project->admins->contains($user);
     }
 
     public function cancel(User $user, Task $task){
         $project = Project::findOrFail($task->project_id);
-        $project->users()->get();
-        return ($project->users->contains($user->id)||$user->is($task->user));
+        $project->admins()->get();
+        return ($user->is($project->owner)||$project->admins->contains($user->id)||$user->is($task->user));
     }
 }

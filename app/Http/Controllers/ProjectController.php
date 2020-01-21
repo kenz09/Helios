@@ -58,9 +58,13 @@ class ProjectController extends Controller
      * @param \App\Project $project
      * @return \Illuminate\View\View
      */
-    public function showById(Project $project){
+    public function showMembers(Project $project){
+        $owner = $project->owner;
+        $admins = $project->admins()->paginate(10);
         $members = $project->users()->paginate(10);
         return view('projectMembers',[
+            'owner' => $owner,
+            'admins' => $admins,
             'members' => $members,
         ]);
     }
@@ -105,9 +109,36 @@ class ProjectController extends Controller
     public function addMember(Project $project,User $user){
         $project->users()->attach($user);
 
-        return redirect('/projects');
+        return redirect('/project/'.$project.'/members');
     }
 
+    /**
+     * adds a member to project
+     *
+     * @param \App\Project $project
+     * @param \App\User $user
+     * @return \Illuminate\Http\RedirectResponse
+     *
+     */
+    public function addAdmin(Project $project,User $user){
+        $project->admins()->attach($user);
+
+        return redirect('/project/'.$project.'/members');
+    }
+
+    /**
+     * adds a member to project
+     *
+     * @param \App\Project $project
+     * @param \App\User $user
+     * @return \Illuminate\Http\RedirectResponse
+     *
+     */
+    public function removeAdmin(Project $project,User $user){
+        $project->admins()->detach($user);
+
+        return redirect('/projects');
+    }
     /**
      * remove a member from project
      *
