@@ -37,7 +37,7 @@
                 </div>
             </div>
             <div class="card">
-                <div class="card-header">projects</div>
+                <div class="card-header">My Projects</div>
 
                 <div class="card-body">
                    <table class="table table-striped">
@@ -46,17 +46,19 @@
                                <td>
                                   {{ $project->title }}
                                </td>
-                               <td class="text-right">
+                               <td class="text-right" width=40%>
+                                   <div class="progress">
+                                   <div class="progress-bar progress-bar-striped" style="width:{{$project->progress}}%" aria-valuenow="{{$project->progress}}" aria-valuemin="0" aria-valuemax="100"></div>
+                                   </div>
+                               </td>
+                               <td>
                                     <form method="GET" action="{{ '/project/'.$project->id }}">
                                         <button type="submit" class="btn btn-primary">View</button>
                                     </form>
-
                                </td>
                            </tr>
                        @endforeach
                    </table>
-
-                    {{ $projects->links() }}
                 </div>
             </div>
         </div>

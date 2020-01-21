@@ -18,10 +18,17 @@ class ProjectController extends Controller
     public function index()
     {
         // paginate the authorized user's tasks with 5 per page
-        $projects = Auth::user()
+        $projectsRaw = Auth::user()
             ->projects()
             ->orderByDesc('created_at')
-            ->paginate(5);
+            ->get();
+        $projects = collect();
+        foreach($projectsRaw as $project){
+            $tasksCount = $project->tasks()->count();
+            if($tasksCount==0) $tasksCount = 1;
+            $project['progress'] = (($project->tasks()->where('is_complete',1)->count()/$tasksCount)*100);
+            $projects->push($project);
+        }
 
         // return task index view with paginated tasks
         return view('projects', [
