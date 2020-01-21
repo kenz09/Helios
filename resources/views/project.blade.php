@@ -46,29 +46,25 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Tasks</div>
+                <div class="card-header">On Going Tasks</div>
 
                 <div class="card-body">
                    <table class="table table-striped">
                        @foreach ($project->tasks as $task)
-                           <tr>
-                               <td>
-                                   @if ($task->is_complete)
-                                       <s>{{ $task->title }}</s>
-                                   @else
-                                       {{ $task->title }}
-                                   @endif
-                               </td>
-                               <td class="text-right">
-                                   @if (! $task->is_complete)
-                                       <form method="POST" action="{{ '/project/'.$project->id.'/tasks/update/'.$task->id.'/' }}">
+                            @if (!$task->is_complete)
+                                <tr>
+                                    <td>
+                                        {{ $task->title }}
+                                     </td>
+                                   <td class="text-right">
+                                        <form method="POST" action="{{ '/project/'.$project->id.'/tasks/update/'.$task->id.'/' }}">
                                            @csrf
                                            @method('PATCH')
                                            <button type="submit" class="btn btn-primary">Complete</button>
-                                       </form>
-                                   @endif
-                               </td>
-                           </tr>
+                                        </form>
+                                   </td>
+                                </tr>
+                           @endif
                        @endforeach
                    </table>
 
@@ -79,6 +75,39 @@
                         <button type="submit" class="btn btn-primary">+ | Create new task</button>
                     </form>
                 </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">Tasks in Moderation</div>
+
+                <div class="card-body">
+                   <table class="table table-striped">
+                       @foreach ($project->tasks as $task)
+                            @if ($task->is_complete)
+                            <tr>
+                                <td>
+                                    <s>{{ $task->title }}</s>
+                                </td>
+                                <td class="text-right">
+                                    <form method="POST" action="{{ '/project/'.$project->id.'/tasks/approve/'.$task->id.'/' }}">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button type="submit" class="btn btn-success">Approve</button>
+                                    </form>
+                                    <form method="POST" action="{{ '/project/'.$project->id.'/tasks/cancel/'.$task->id.'/' }}">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button type="submit" class="btn btn-danger">Cancel</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endif
+                       @endforeach
+                   </table>
+
+                </div>
+
             </div>
         </div>
     </div>

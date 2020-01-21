@@ -100,4 +100,50 @@ class TaskController extends Controller
         return redirect('/project/'.$project->id);
     }
 
+    /**
+     * Mark the given task as approved and redirect to project index.
+     *
+     * @param \App\Task $task
+     * @return \Illuminate\Routing\Redirector
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function approve(Project $project, Task $task)
+    {
+        // check if the authenticated user can complete the task
+        $this->authorize('approve', ['task'=>$task, 'project'=>$project]);
+
+        // mark the task as complete and save it
+        $task->is_approved = true;
+        $task->save();
+
+        // flash a success message to the session
+        session()->flash('status', 'Task Approved!');
+
+        // redirect to tasks index
+        return redirect('/project/'.$project->id);
+    }
+
+    /**
+     * Mark the given task as cancelled and redirect to project index.
+     *
+     * @param \App\Task $task
+     * @return \Illuminate\Routing\Redirector
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function cancel(Project $project, Task $task)
+    {
+        // check if the authenticated user can complete the task
+        $this->authorize('cancel', [$task, $project]);
+
+        // mark the task as complete and save it
+        $task->is_approved = false;
+        $task->is_complete = false;
+        $task->save();
+
+        // flash a success message to the session
+        session()->flash('status', 'Task Cancelled!');
+
+        // redirect to tasks index
+        return redirect('/project/'.$project->id);
+    }
 }

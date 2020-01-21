@@ -33,6 +33,8 @@ Route::middleware(['auth'])->group(function() {
     Route::get('project/{project}/tasks', 'TaskController@create');
     Route::post('project/{project}/tasks/store', 'TaskController@store');
     Route::patch('project/{project}/tasks/update/{task}', 'TaskController@update');
+    Route::patch('project/{project}/tasks/approve/{task}', 'TaskController@approve');
+    Route::patch('project/{project}/tasks/cancel/{task}', 'TaskController@cancel');
 
     Route::get('project/{project}/members', 'ProjectController@show');
     Route::patch('project/{project}/add/{user}', 'ProjectController@addMember');
